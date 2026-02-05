@@ -23,12 +23,12 @@ async def create_session(
         SessionResponse with session_id and metadata
     """
     # Create new session
-    session = SessionModel(metadata=session_data.metadata)
+    session = SessionModel(session_metadata=session_data.session_metadata)
     db.add(session)
     await db.flush()
     
     return SessionResponse(
         session_id=session.id,
         created_at=session.created_at,
-        metadata=session.metadata
+        session_metadata=session.session_metadata
     )

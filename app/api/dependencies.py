@@ -1,4 +1,5 @@
 """Dependency injection for FastAPI routes."""
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.repositories.vector_store import VectorStoreRepository
@@ -20,7 +21,7 @@ def get_vector_repo() -> VectorStoreRepository:
     return _vector_repo
 
 
-async def get_document_service(db: AsyncSession = get_db) -> DocumentService:
+async def get_document_service(db: AsyncSession = Depends(get_db)) -> DocumentService:
     """
     Get document service with dependencies.
     
@@ -35,7 +36,7 @@ async def get_document_service(db: AsyncSession = get_db) -> DocumentService:
     return DocumentService(vector_repo, doc_repo)
 
 
-async def get_chat_service(db: AsyncSession = get_db) -> ChatService:
+async def get_chat_service(db: AsyncSession = Depends(get_db)) -> ChatService:
     """
     Get chat service with dependencies.
     
